@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F6D36046182E87740085CB02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36045182E87740085CB02 /* Foundation.framework */; };
+		F6D36048182E87740085CB02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36047182E87740085CB02 /* CoreGraphics.framework */; };
+		F6D3604A182E87740085CB02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36049182E87740085CB02 /* UIKit.framework */; };
+		F6D36050182E87740085CB02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F6D3604E182E87740085CB02 /* InfoPlist.strings */; };
+		F6D36052182E87740085CB02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D36051182E87740085CB02 /* main.m */; };
+		F6D36056182E87740085CB02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D36055182E87740085CB02 /* AppDelegate.m */; };
+		F6D36059182E87740085CB02 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6D36057182E87740085CB02 /* Main_iPhone.storyboard */; };
+		F6D3605C182E87740085CB02 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6D3605A182E87740085CB02 /* Main_iPad.storyboard */; };
+		F6D3605F182E87740085CB02 /* EnvelopesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D3605E182E87740085CB02 /* EnvelopesViewController.m */; };
+		F6D36062182E87740085CB02 /* TransactionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D36061182E87740085CB02 /* TransactionsViewController.m */; };
+		F6D36064182E87740085CB02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6D36063182E87740085CB02 /* Images.xcassets */; };
+		F6D3606B182E87740085CB02 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D3606A182E87740085CB02 /* XCTest.framework */; };
+		F6D3606C182E87740085CB02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36045182E87740085CB02 /* Foundation.framework */; };
+		F6D3606D182E87740085CB02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36049182E87740085CB02 /* UIKit.framework */; };
+		F6D36075182E87740085CB02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F6D36073182E87740085CB02 /* InfoPlist.strings */; };
+		F6D36077182E87740085CB02 /* EnvelopesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D36076182E87740085CB02 /* EnvelopesTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F6D3606E182E87740085CB02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6D3603A182E87740085CB02 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6D36041182E87740085CB02;
+			remoteInfo = Envelopes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F6D36042182E87740085CB02 /* Envelopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Envelopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6D36045182E87740085CB02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F6D36047182E87740085CB02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F6D36049182E87740085CB02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F6D3604D182E87740085CB02 /* Envelopes-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Envelopes-Info.plist"; sourceTree = "<group>"; };
+		F6D3604F182E87740085CB02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F6D36051182E87740085CB02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F6D36053182E87740085CB02 /* Envelopes-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Envelopes-Prefix.pch"; sourceTree = "<group>"; };
+		F6D36054182E87740085CB02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F6D36055182E87740085CB02 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F6D36058182E87740085CB02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		F6D3605B182E87740085CB02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		F6D3605D182E87740085CB02 /* EnvelopesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnvelopesViewController.h; sourceTree = "<group>"; };
+		F6D3605E182E87740085CB02 /* EnvelopesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnvelopesViewController.m; sourceTree = "<group>"; };
+		F6D36060182E87740085CB02 /* TransactionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransactionsViewController.h; sourceTree = "<group>"; };
+		F6D36061182E87740085CB02 /* TransactionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransactionsViewController.m; sourceTree = "<group>"; };
+		F6D36063182E87740085CB02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F6D36069182E87740085CB02 /* EnvelopesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnvelopesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6D3606A182E87740085CB02 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F6D36072182E87740085CB02 /* EnvelopesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EnvelopesTests-Info.plist"; sourceTree = "<group>"; };
+		F6D36074182E87740085CB02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F6D36076182E87740085CB02 /* EnvelopesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnvelopesTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F6D3603F182E87740085CB02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D36048182E87740085CB02 /* CoreGraphics.framework in Frameworks */,
+				F6D3604A182E87740085CB02 /* UIKit.framework in Frameworks */,
+				F6D36046182E87740085CB02 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6D36066182E87740085CB02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D3606B182E87740085CB02 /* XCTest.framework in Frameworks */,
+				F6D3606D182E87740085CB02 /* UIKit.framework in Frameworks */,
+				F6D3606C182E87740085CB02 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F6D36039182E87740085CB02 = {
+			isa = PBXGroup;
+			children = (
+				F6D3604B182E87740085CB02 /* Envelopes */,
+				F6D36070182E87740085CB02 /* EnvelopesTests */,
+				F6D36044182E87740085CB02 /* Frameworks */,
+				F6D36043182E87740085CB02 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F6D36043182E87740085CB02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F6D36042182E87740085CB02 /* Envelopes.app */,
+				F6D36069182E87740085CB02 /* EnvelopesTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F6D36044182E87740085CB02 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6D36045182E87740085CB02 /* Foundation.framework */,
+				F6D36047182E87740085CB02 /* CoreGraphics.framework */,
+				F6D36049182E87740085CB02 /* UIKit.framework */,
+				F6D3606A182E87740085CB02 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6D3604B182E87740085CB02 /* Envelopes */ = {
+			isa = PBXGroup;
+			children = (
+				F6D36054182E87740085CB02 /* AppDelegate.h */,
+				F6D36055182E87740085CB02 /* AppDelegate.m */,
+				F6D36057182E87740085CB02 /* Main_iPhone.storyboard */,
+				F6D3605A182E87740085CB02 /* Main_iPad.storyboard */,
+				F6D3605D182E87740085CB02 /* EnvelopesViewController.h */,
+				F6D3605E182E87740085CB02 /* EnvelopesViewController.m */,
+				F6D36060182E87740085CB02 /* TransactionsViewController.h */,
+				F6D36061182E87740085CB02 /* TransactionsViewController.m */,
+				F6D36063182E87740085CB02 /* Images.xcassets */,
+				F6D3604C182E87740085CB02 /* Supporting Files */,
+			);
+			path = Envelopes;
+			sourceTree = "<group>";
+		};
+		F6D3604C182E87740085CB02 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6D3604D182E87740085CB02 /* Envelopes-Info.plist */,
+				F6D3604E182E87740085CB02 /* InfoPlist.strings */,
+				F6D36051182E87740085CB02 /* main.m */,
+				F6D36053182E87740085CB02 /* Envelopes-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F6D36070182E87740085CB02 /* EnvelopesTests */ = {
+			isa = PBXGroup;
+			children = (
+				F6D36076182E87740085CB02 /* EnvelopesTests.m */,
+				F6D36071182E87740085CB02 /* Supporting Files */,
+			);
+			path = EnvelopesTests;
+			sourceTree = "<group>";
+		};
+		F6D36071182E87740085CB02 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6D36072182E87740085CB02 /* EnvelopesTests-Info.plist */,
+				F6D36073182E87740085CB02 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F6D36041182E87740085CB02 /* Envelopes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6D3607A182E87740085CB02 /* Build configuration list for PBXNativeTarget "Envelopes" */;
+			buildPhases = (
+				F6D3603E182E87740085CB02 /* Sources */,
+				F6D3603F182E87740085CB02 /* Frameworks */,
+				F6D36040182E87740085CB02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Envelopes;
+			productName = Envelopes;
+			productReference = F6D36042182E87740085CB02 /* Envelopes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F6D36068182E87740085CB02 /* EnvelopesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6D3607D182E87740085CB02 /* Build configuration list for PBXNativeTarget "EnvelopesTests" */;
+			buildPhases = (
+				F6D36065182E87740085CB02 /* Sources */,
+				F6D36066182E87740085CB02 /* Frameworks */,
+				F6D36067182E87740085CB02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6D3606F182E87740085CB02 /* PBXTargetDependency */,
+			);
+			name = EnvelopesTests;
+			productName = EnvelopesTests;
+			productReference = F6D36069182E87740085CB02 /* EnvelopesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F6D3603A182E87740085CB02 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Don Wilson";
+				TargetAttributes = {
+					F6D36041182E87740085CB02 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					F6D36068182E87740085CB02 = {
+						TestTargetID = F6D36041182E87740085CB02;
+					};
+				};
+			};
+			buildConfigurationList = F6D3603D182E87740085CB02 /* Build configuration list for PBXProject "Envelopes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F6D36039182E87740085CB02;
+			productRefGroup = F6D36043182E87740085CB02 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F6D36041182E87740085CB02 /* Envelopes */,
+				F6D36068182E87740085CB02 /* EnvelopesTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F6D36040182E87740085CB02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D3605C182E87740085CB02 /* Main_iPad.storyboard in Resources */,
+				F6D36064182E87740085CB02 /* Images.xcassets in Resources */,
+				F6D36059182E87740085CB02 /* Main_iPhone.storyboard in Resources */,
+				F6D36050182E87740085CB02 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6D36067182E87740085CB02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D36075182E87740085CB02 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F6D3603E182E87740085CB02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D36056182E87740085CB02 /* AppDelegate.m in Sources */,
+				F6D3605F182E87740085CB02 /* EnvelopesViewController.m in Sources */,
+				F6D36052182E87740085CB02 /* main.m in Sources */,
+				F6D36062182E87740085CB02 /* TransactionsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6D36065182E87740085CB02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D36077182E87740085CB02 /* EnvelopesTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F6D3606F182E87740085CB02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6D36041182E87740085CB02 /* Envelopes */;
+			targetProxy = F6D3606E182E87740085CB02 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F6D3604E182E87740085CB02 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6D3604F182E87740085CB02 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F6D36057182E87740085CB02 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6D36058182E87740085CB02 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		F6D3605A182E87740085CB02 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6D3605B182E87740085CB02 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		F6D36073182E87740085CB02 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6D36074182E87740085CB02 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F6D36078182E87740085CB02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F6D36079182E87740085CB02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F6D3607B182E87740085CB02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Envelopes/Envelopes-Prefix.pch";
+				INFOPLIST_FILE = "Envelopes/Envelopes-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F6D3607C182E87740085CB02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Envelopes/Envelopes-Prefix.pch";
+				INFOPLIST_FILE = "Envelopes/Envelopes-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		F6D3607E182E87740085CB02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Envelopes.app/Envelopes";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Envelopes/Envelopes-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EnvelopesTests/EnvelopesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		F6D3607F182E87740085CB02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Envelopes.app/Envelopes";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Envelopes/Envelopes-Prefix.pch";
+				INFOPLIST_FILE = "EnvelopesTests/EnvelopesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F6D3603D182E87740085CB02 /* Build configuration list for PBXProject "Envelopes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6D36078182E87740085CB02 /* Debug */,
+				F6D36079182E87740085CB02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6D3607A182E87740085CB02 /* Build configuration list for PBXNativeTarget "Envelopes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6D3607B182E87740085CB02 /* Debug */,
+				F6D3607C182E87740085CB02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6D3607D182E87740085CB02 /* Build configuration list for PBXNativeTarget "EnvelopesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6D3607E182E87740085CB02 /* Debug */,
+				F6D3607F182E87740085CB02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F6D3603A182E87740085CB02 /* Project object */;
+}
