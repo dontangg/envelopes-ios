@@ -154,6 +154,9 @@
     cell.textLabel.text = envelope[@"name"];
     cell.detailTextLabel.text = envelope[@"total_amount"];
 
+    if ([envelope[@"total_amount"] integerValue] < 0)
+        cell.detailTextLabel.textColor = [UIColor redColor];
+
     return cell;
 }
 
