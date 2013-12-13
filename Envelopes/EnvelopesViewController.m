@@ -11,10 +11,15 @@
 #import "TransactionsViewController.h"
 
 @interface EnvelopesViewController ()
-    @property (nonatomic, strong) NSDictionary *envelopes;
+    
 @end
 
 @implementation EnvelopesViewController
+
+- (void)setEnvelopes:(NSArray *)envelopes {
+    _envelopes = envelopes;
+    [self.tableView reloadData];
+}
 
 - (void)awakeFromNib
 {
@@ -31,66 +36,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     self.detailViewController = (TransactionsViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-
-    _envelopes = nil;
-    [self getEnvelopes];
-}
-
-- (void)getEnvelopes
-{
-    NSURL *url = [NSURL URLWithString:@"http://money.thewilsonpad.com/envelopes.json?api_token=d108svjwx9"];
-    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLSessionDownloadTask *downloadTask = [urlSession downloadTaskWithURL:url
-                                                           completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                                               if (error)
-                                                                   NSLog(@"error downloading file: %@", error);
-
-                                                               NSURL *folderUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-
-                                                               folderUrl = [folderUrl URLByAppendingPathComponent:@"downloads" isDirectory:YES];
-                                                               [[NSFileManager defaultManager] createDirectoryAtURL:folderUrl withIntermediateDirectories:YES attributes:nil error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error creating directory: %@", error);
-
-                                                               NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                                                               [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                                                               NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-
-                                                               NSString *filename = [NSString stringWithFormat:@"envelopes-%@", dateString];
-
-                                                               NSLog(@"filename: %@", filename);
-
-                                                               NSURL *fileUrl = [folderUrl URLByAppendingPathComponent:filename]; // The url is now "<App Sandbox>/<Documents Directory>/downloads/<filename>"
-
-                                                               NSArray *existingFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:folderUrl includingPropertiesForKeys:nil options:kNilOptions error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error listing files in %@: %@", folderUrl, error);
-
-                                                               for (NSURL *existingFileUrl in existingFiles) {
-                                                                   [[NSFileManager defaultManager] removeItemAtURL:existingFileUrl error:&error];
-
-                                                                   if (error)
-                                                                       NSLog(@"error deleting file %@: %@", existingFileUrl, error);
-                                                               }
-
-                                                               [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileUrl error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error moving file: %@", error);
-
-                                                               NSData *envelopesData = [NSData dataWithContentsOfURL:fileUrl];
-
-                                                               NSDictionary *envelopes = [NSJSONSerialization JSONObjectWithData:envelopesData options:kNilOptions error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error deserializing json: %@", error);
-
-                                                               self.envelopes = envelopes;
-                                                               NSLog(@"%@", envelopes);
-
-                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                   [self.tableView reloadData];
-                                                               });
-                                                           }];
-    [downloadTask resume];
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,26 +48,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (!self.envelopes || !self.envelopes[@""])
+    if (!self.envelopes)
         return 0;
 
-    NSArray *topLevelEnvelopes = self.envelopes[@""];
-    return topLevelEnvelopes.count;
+    return self.envelopes.count;
 }
 
 - (NSDictionary *)envelopeForSection:(NSInteger)section
 {
-    NSArray *topLevelEnvelopes = self.envelopes[@""];
-    return topLevelEnvelopes[section];
+    return self.envelopes[section];
 }
 
 - (NSArray *)subEnvelopesForSection:(NSInteger)section
 {
     NSDictionary *topLevelEnvelope = [self envelopeForSection:section];
 
-    NSNumber *topLevelEnvelopeId = topLevelEnvelope[@"id"];
-
-    return self.envelopes[[topLevelEnvelopeId stringValue]];
+    return topLevelEnvelope[@"children"];
 }
 
 - (NSDictionary *)envelopeForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -147,12 +88,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
     NSDictionary *envelope = [self envelopeForRowAtIndexPath:indexPath];
 
+    NSString *cellIdentifier = envelope[@"children"] ? @"ParentEnvelopeCell" : @"CellWithAmount";
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+
+
     cell.textLabel.text = envelope[@"name"];
-    cell.detailTextLabel.text = envelope[@"total_amount"];
+
+    if (!envelope[@"children"])
+        cell.detailTextLabel.text = envelope[@"total_amount"];
 
     cell.detailTextLabel.textColor = ([envelope[@"total_amount"] integerValue] < 0) ? [UIColor redColor] : [UIColor lightGrayColor];
 
@@ -203,14 +149,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDictionary *envelope = [self envelopeForRowAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:envelope];
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSDictionary *envelope = [self envelopeForRowAtIndexPath:indexPath];
+
+    if ([segue.identifier isEqualToString:@"transactions"]) {
+        [segue.destinationViewController setDetailItem:envelope];
+    } else if ([segue.identifier isEqualToString:@"subenvelopes"]) {
+        EnvelopesViewController *vc = segue.destinationViewController;
+        vc.envelopes = @[envelope];
     }
 }
 
 - (IBAction)refreshPressed:(UIBarButtonItem *)sender {
-    [self getEnvelopes];
+    //[self getEnvelopes];
 }
 @end

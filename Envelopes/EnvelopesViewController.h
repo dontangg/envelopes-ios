@@ -12,7 +12,10 @@
 
 @interface EnvelopesViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *envelopes;
+
 @property (strong, nonatomic) TransactionsViewController *detailViewController;
+
 - (IBAction)refreshPressed:(UIBarButtonItem *)sender;
 
 @end
