@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EnvelopesViewController.h"
+#import "DataRepository.h"
 
 @implementation AppDelegate
 
@@ -19,6 +20,10 @@
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
     }
+
+    // NOTE: only works for iPhone
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    navController.delegate = self;
 
     [self getEnvelopes];
 
@@ -56,100 +61,22 @@
 
 - (void)getEnvelopes
 {
-    NSURL *url = [NSURL URLWithString:@"http://money.thewilsonpad.com/envelopes.json?api_token=d108svjwx9"];
-    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLSessionDownloadTask *downloadTask = [urlSession downloadTaskWithURL:url
-                                                           completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                                               if (error)
-                                                                   NSLog(@"error downloading file: %@", error);
+    [DataRepository getEnvelopesUsingToken:@"d108svjwx9" allowCache:YES callback:^(NSArray *envelopes) {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
 
-                                                               NSURL *folderUrl = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-
-                                                               folderUrl = [folderUrl URLByAppendingPathComponent:@"downloads" isDirectory:YES];
-                                                               [[NSFileManager defaultManager] createDirectoryAtURL:folderUrl withIntermediateDirectories:YES attributes:nil error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error creating directory: %@", error);
-
-                                                               NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                                                               [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                                                               NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-
-                                                               NSString *filename = [NSString stringWithFormat:@"envelopes-%@", dateString];
-
-                                                               NSLog(@"filename: %@", filename);
-
-                                                               NSURL *fileUrl = [folderUrl URLByAppendingPathComponent:filename]; // The url is now "<App Sandbox>/<Documents Directory>/downloads/<filename>"
-
-                                                               NSArray *existingFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:folderUrl includingPropertiesForKeys:nil options:kNilOptions error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error listing files in %@: %@", folderUrl, error);
-
-                                                               for (NSURL *existingFileUrl in existingFiles) {
-                                                                   [[NSFileManager defaultManager] removeItemAtURL:existingFileUrl error:&error];
-
-                                                                   if (error)
-                                                                       NSLog(@"error deleting file %@: %@", existingFileUrl, error);
-                                                               }
-
-                                                               [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileUrl error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error moving file: %@", error);
-
-                                                               NSData *envelopesData = [NSData dataWithContentsOfURL:fileUrl];
-
-                                                               NSDictionary *json = [NSJSONSerialization JSONObjectWithData:envelopesData options:kNilOptions error:&error];
-                                                               if (error)
-                                                                   NSLog(@"error deserializing json: %@", error);
-
-                                                               NSArray *envelopes = [self organizeEnvelopes:json];
-
-                                                               NSLog(@"%@", envelopes);
-                                                               
-                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                                                                       UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-
-                                                                       EnvelopesViewController *envelopesViewController = (EnvelopesViewController *)navController.viewControllers[0];
-                                                                       envelopesViewController.envelopes = envelopes;
-                                                                   }
-                                                               });
-                                                           }];
-    [downloadTask resume];
+            EnvelopesViewController *envelopesViewController = (EnvelopesViewController *)navController.viewControllers[0];
+            envelopesViewController.envelopes = envelopes;
+        }
+    }];
 }
 
-- (NSArray *)organizeEnvelopes:(NSDictionary *)json {
-    NSMutableArray *envelopes = [NSMutableArray arrayWithCapacity:[json[@""] count]];
+#pragma mark - UINavigationControllerDelegate
 
-    for (NSDictionary *jsonEnvelope in json[@""]) {
-        NSMutableDictionary *envelope = [jsonEnvelope mutableCopy];
-        [envelopes addObject:envelope];
-
-        NSString *idStr = [envelope[@"id"] stringValue];
-
-        if (json[idStr]) {
-            NSMutableArray *l1Envelopes = [NSMutableArray arrayWithCapacity:[json[idStr] count]];
-            for (NSDictionary *l1JsonEnvelope in json[idStr]) {
-                NSMutableDictionary *l1Envelope = [l1JsonEnvelope mutableCopy];
-                [l1Envelopes addObject:l1Envelope];
-
-                idStr = [l1Envelope[@"id"] stringValue];
-
-                if (json[idStr]) {
-                    NSMutableArray *l2Envelopes = [NSMutableArray arrayWithCapacity:[json[idStr] count]];
-                    for (NSDictionary *l2JsonEnvelope in json[idStr]) {
-                        NSMutableDictionary *l2Envelope = [l2JsonEnvelope mutableCopy];
-                        [l2Envelopes addObject:l2Envelope];
-                    }
-
-                    l1Envelope[@"children"] = l2Envelopes;
-                }
-            }
-
-            envelope[@"children"] = l1Envelopes;
-        }
-    }
-
-    return envelopes;
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    BOOL enableButton = navigationController.viewControllers[0] == viewController;
+    viewController.navigationItem.rightBarButtonItem.enabled = enableButton;
 }
 
 @end

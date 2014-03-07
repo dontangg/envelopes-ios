@@ -7,8 +7,8 @@
 //
 
 #import "EnvelopesViewController.h"
-
 #import "TransactionsViewController.h"
+#import "DataRepository.h"
 
 @interface EnvelopesViewController ()
     
@@ -90,6 +90,7 @@
 {
     NSDictionary *envelope = [self envelopeForRowAtIndexPath:indexPath];
 
+    // Figure out if we are displaying a parent envelope or an envelope with an amount
     NSString *cellIdentifier = envelope[@"children"] ? @"ParentEnvelopeCell" : @"CellWithAmount";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -157,10 +158,14 @@
     } else if ([segue.identifier isEqualToString:@"subenvelopes"]) {
         EnvelopesViewController *vc = segue.destinationViewController;
         vc.envelopes = @[envelope];
+
+        //self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 }
 
 - (IBAction)refreshPressed:(UIBarButtonItem *)sender {
-    //[self getEnvelopes];
+    [DataRepository getEnvelopesUsingToken:@"d108svjwx9" allowCache:NO callback:^(NSArray *envelopes) {
+        self.envelopes = envelopes;
+    }];
 }
 @end

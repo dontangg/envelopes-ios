@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6644ED418CA6997004A5967 /* DataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = F6644ED318CA6997004A5967 /* DataRepository.m */; };
 		F6D36046182E87740085CB02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36045182E87740085CB02 /* Foundation.framework */; };
 		F6D36048182E87740085CB02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36047182E87740085CB02 /* CoreGraphics.framework */; };
 		F6D3604A182E87740085CB02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D36049182E87740085CB02 /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F6644ED218CA6997004A5967 /* DataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRepository.h; sourceTree = "<group>"; };
+		F6644ED318CA6997004A5967 /* DataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRepository.m; sourceTree = "<group>"; };
 		F6D36042182E87740085CB02 /* Envelopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Envelopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6D36045182E87740085CB02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F6D36047182E87740085CB02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -127,6 +130,8 @@
 				F6D36061182E87740085CB02 /* TransactionsViewController.m */,
 				F6D36063182E87740085CB02 /* Images.xcassets */,
 				F6D3604C182E87740085CB02 /* Supporting Files */,
+				F6644ED218CA6997004A5967 /* DataRepository.h */,
+				F6644ED318CA6997004A5967 /* DataRepository.m */,
 			);
 			path = Envelopes;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				F6D3605F182E87740085CB02 /* EnvelopesViewController.m in Sources */,
 				F6D36052182E87740085CB02 /* main.m in Sources */,
 				F6D36062182E87740085CB02 /* TransactionsViewController.m in Sources */,
+				F6644ED418CA6997004A5967 /* DataRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
