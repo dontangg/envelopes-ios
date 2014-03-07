@@ -98,10 +98,15 @@
 
     cell.textLabel.text = envelope[@"name"];
 
-    if (!envelope[@"children"])
-        cell.detailTextLabel.text = envelope[@"total_amount"];
+    float totalAmount = [envelope[@"total_amount"] floatValue];
 
-    cell.detailTextLabel.textColor = ([envelope[@"total_amount"] integerValue] < 0) ? [UIColor redColor] : [UIColor lightGrayColor];
+    if (!envelope[@"children"]) {
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        cell.detailTextLabel.text = [formatter stringFromNumber:[NSNumber numberWithFloat:totalAmount]];
+    }
+
+    cell.detailTextLabel.textColor = totalAmount < 0 ? [UIColor redColor] : [UIColor lightGrayColor];
 
     return cell;
 }
