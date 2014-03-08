@@ -35,9 +35,9 @@
 {
     // Update the user interface for the detail item.
 
-    //if (self.detailItem) {
-    //    self.detailDescriptionLabel.text = [NSString stringWithFormat:@"Transactions for %@ coming soon.", self.detailItem[@"name"]];
-    //}
+    if (self.detailItem) {
+        self.navigationItem.title = self.detailItem[@"name"];
+    }
 }
 
 - (void)viewDidLoad
@@ -67,6 +67,48 @@
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
+}
+
+#pragma mark - Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return NO;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Envelope Details";
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //NSDictionary *transaction = [self envelopeForRowAtIndexPath:indexPath];
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"transaction" forIndexPath:indexPath];
+
+    cell.textLabel.text = @"Payee";
+
+    float totalAmount = 10.4;
+
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    cell.detailTextLabel.text = [formatter stringFromNumber:[NSNumber numberWithFloat:totalAmount]];
+
+    cell.detailTextLabel.textColor = totalAmount > 0 ? [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1] : [UIColor lightGrayColor];
+
+    return cell;
 }
 
 @end

@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TransactionsViewController : UIViewController <UISplitViewControllerDelegate>
+@interface TransactionsViewController : UITableViewController <UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end
