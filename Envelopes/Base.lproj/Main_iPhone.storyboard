@@ -85,6 +85,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Envelopes" id="tQt-TN-PWz">
+                        <barButtonItem key="leftBarButtonItem" title="⚙" id="8XF-GA-rPM">
+                            <connections>
+                                <segue destination="aV5-CL-56M" kind="modal" id="5gd-VA-Kk2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="GIc-Tt-4Lf">
                             <connections>
                                 <action selector="refreshPressed:" destination="pGg-6v-bdr" id="s7r-0N-lqg"/>
@@ -95,6 +100,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="511" y="-35"/>
+        </scene>
+        <!--Settings View Controller - Settings-->
+        <scene sceneID="fKr-8R-oyP">
+            <objects>
+                <viewController id="JxL-0B-FEc" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="f1q-Wv-E0I"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pqd-gE-iHy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LnU-nP-2hM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="API Token" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BG-xK-4FU">
+                                <rect key="frame" x="122" y="114" width="77" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="28P-0N-LSz">
+                                <rect key="frame" x="109" y="143" width="102" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="00q-8L-Iu3">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="9js-Um-02o">
+                            <connections>
+                                <action selector="donePressed:" destination="JxL-0B-FEc" id="TGK-ta-XOF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tokenField" destination="28P-0N-LSz" id="XTe-sN-MLS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qkE-Xo-aqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402" y="-715"/>
         </scene>
         <!--Transactions View Controller - Detail-->
         <scene sceneID="Cn3-H9-jdl">
@@ -131,6 +178,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1090" y="-35"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Mnj-3M-Id3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aV5-CL-56M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7as-cd-PyI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JxL-0B-FEc" kind="relationship" relationship="rootViewController" id="76c-OH-XaH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ycH-0M-RJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="876" y="-715"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

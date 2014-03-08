@@ -61,7 +61,11 @@
 
 - (void)getEnvelopes
 {
-    [DataRepository getEnvelopesUsingToken:@"d108svjwx9" allowCache:YES callback:^(NSArray *envelopes) {
+    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"APIToken"];
+    if (!token || token.length == 0)
+        return;
+
+    [DataRepository getEnvelopesUsingToken:token allowCache:YES callback:^(NSArray *envelopes, NSString *errorMessage) {
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
 

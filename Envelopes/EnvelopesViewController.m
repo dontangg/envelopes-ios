@@ -36,6 +36,11 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     self.detailViewController = (TransactionsViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
+    UIBarButtonItem *settingsButton = self.navigationItem.leftBarButtonItem;
+    UIFont *customFont = [UIFont fontWithName:@"Helvetica Neue" size:26.0];
+    NSDictionary *fontDictionary = @{NSFontAttributeName: customFont};
+    [settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,14 +168,17 @@
     } else if ([segue.identifier isEqualToString:@"subenvelopes"]) {
         EnvelopesViewController *vc = segue.destinationViewController;
         vc.envelopes = @[envelope];
-
-        //self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 }
 
 - (IBAction)refreshPressed:(UIBarButtonItem *)sender {
-    [DataRepository getEnvelopesUsingToken:@"d108svjwx9" allowCache:NO callback:^(NSArray *envelopes) {
+    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"APIToken"];
+    if (!token || token.length == 0)
+        return;
+    
+    [DataRepository getEnvelopesUsingToken:token allowCache:NO callback:^(NSArray *envelopes, NSString *errorMessage) {
         self.envelopes = envelopes;
     }];
 }
+
 @end

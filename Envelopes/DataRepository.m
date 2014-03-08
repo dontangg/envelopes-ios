@@ -10,11 +10,11 @@
 
 @implementation DataRepository
 
-+ (void)getEnvelopesUsingToken:(NSString *)token allowCache:(BOOL)allowCache callback:(EnvelopesCallback)callback
++ (void)getEnvelopesUsingToken:(NSString *)token allowCache:(BOOL)allowCache callback:(DataCallback)callback
 {
     // Get the downloads folder
     NSURL *folderUrl = [self getDownloadsFolderUrl];
-    NSURL *fileUrl = [self getEnvelopesFileUrl:folderUrl];
+    __block NSURL *fileUrl = [self getEnvelopesFileUrl:folderUrl];
 
     if (allowCache && [[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path]]) {
         NSLog(@"Reading file from cache");
@@ -27,15 +27,22 @@
     NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSURLSessionDownloadTask *downloadTask = [urlSession downloadTaskWithURL:url
                                                            completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                                               if (error)
+                                                               if (error) {
                                                                    NSLog(@"error downloading file: %@", error);
+                                                                   [self invokeCallback:callback data:nil errorMessage:@"Error downloading the file"];
+                                                                   return;
+                                                               }
 
                                                                [self deleteCachedFiles:folderUrl];
 
                                                                // Move the recently downloaded file to the downloads folder and give it the new file name
                                                                [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileUrl error:&error];
-                                                               if (error)
+                                                               if (error) {
                                                                    NSLog(@"error moving file: %@", error);
+
+                                                                   // If we couldn't move the file, just read it at it's current location
+                                                                   fileUrl = location;
+                                                               }
 
                                                                [self readEnvelopesFile:fileUrl andCallback:callback];
                                                            }];
@@ -54,22 +61,30 @@
     return [folderUrl URLByAppendingPathComponent:filename];
 }
 
-+ (void)readEnvelopesFile:(NSURL *)fileUrl andCallback:(EnvelopesCallback)callback
++ (void)readEnvelopesFile:(NSURL *)fileUrl andCallback:(DataCallback)callback
 {
     // Read the data from the downloaded file
     NSData *envelopesData = [NSData dataWithContentsOfURL:fileUrl];
 
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:envelopesData options:kNilOptions error:&error];
-    if (error)
+    if (error) {
         NSLog(@"error deserializing json: %@", error);
+        [self invokeCallback:callback data:nil errorMessage:@"Error deserializing json response"];
+        return;
+    }
 
     NSArray *envelopes = [self organizeEnvelopes:json];
 
     NSLog(@"%@", envelopes);
 
+    [self invokeCallback:callback data:envelopes errorMessage:nil];
+}
+
++ (void)invokeCallback:(DataCallback)callback data:(NSArray *)data errorMessage:(NSString *)errorMessage
+{
     dispatch_async(dispatch_get_main_queue(), ^{
-        callback(envelopes);
+        callback(data, errorMessage);
     });
 }
 
@@ -112,8 +127,20 @@
 
 + (NSArray *)organizeEnvelopes:(NSDictionary *)json
 {
-    NSMutableArray *envelopes = [NSMutableArray arrayWithCapacity:[json[@""] count]];
+    NSInteger topLevelEnvelopeCount = ([json[@""] count] + 1);
+    NSMutableArray *envelopes = [NSMutableArray arrayWithCapacity:topLevelEnvelopeCount];
 
+    // Do the system envelopes (all, available, pending, unassigned)
+    NSMutableDictionary *sysEnvelope = [NSMutableDictionary dictionaryWithObject:@"System" forKey:@"name"];
+    NSMutableArray *sysChildEnvelopes = [NSMutableArray arrayWithCapacity:[json[@"sys"] count]];
+    for (NSDictionary *sysJsonChildEnvelope in json[@"sys"]) {
+        NSMutableDictionary *sysChildEnvelope = [sysJsonChildEnvelope mutableCopy];
+        [sysChildEnvelopes addObject:sysChildEnvelope];
+    }
+    sysEnvelope[@"children"] = sysChildEnvelopes;
+    [envelopes addObject:sysEnvelope];
+
+    // Now we'll add all the rest of the envelopes
     for (NSDictionary *jsonEnvelope in json[@""]) {
         NSMutableDictionary *envelope = [jsonEnvelope mutableCopy];
         [envelopes addObject:envelope];

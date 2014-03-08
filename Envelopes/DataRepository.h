@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^EnvelopesCallback)(NSArray *);
+typedef void (^DataCallback)(NSArray *items, NSString *errorMessage);
 
 @interface DataRepository : NSObject
 
-+ (void)getEnvelopesUsingToken:(NSString *)token allowCache:(BOOL)allowCache callback:(EnvelopesCallback)callback;
++ (void)getEnvelopesUsingToken:(NSString *)token allowCache:(BOOL)allowCache callback:(DataCallback)callback;
 
 @end
