@@ -61,7 +61,7 @@
 
 - (void)getEnvelopes
 {
-    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"APIToken"];
+    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"ApiToken"];
     if (!token || token.length == 0)
         return;
 

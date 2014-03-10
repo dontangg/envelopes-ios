@@ -26,7 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    self.tokenField.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"ApiToken"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,7 +39,7 @@
 - (IBAction)donePressed:(UIBarButtonItem *)sender
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.tokenField.text forKey:@"APIToken"];
+    [defaults setObject:self.tokenField.text forKey:@"ApiToken"];
     [defaults synchronize];
 
     [self dismissViewControllerAnimated:YES completion:NULL];

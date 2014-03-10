@@ -37,10 +37,14 @@
 
     self.detailViewController = (TransactionsViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
-    UIBarButtonItem *settingsButton = self.navigationItem.leftBarButtonItem;
-    UIFont *customFont = [UIFont fontWithName:@"Helvetica Neue" size:26.0];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"\u2699" style:UIBarButtonItemStylePlain target:self action:@selector(settingsPressed)];
+    UIFont *customFont = [UIFont fontWithName:@"Helvetica Neue" size:28.0];
     NSDictionary *fontDictionary = @{NSFontAttributeName: customFont};
     [settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
+
+    UIBarButtonItem *refreshButton = self.navigationItem.rightBarButtonItem;
+
+    self.navigationItem.rightBarButtonItems = @[refreshButton, settingsButton]; // Displayed in opposite order
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,8 +175,13 @@
     }
 }
 
+- (void)settingsPressed
+{
+    [self performSegueWithIdentifier:@"Settings" sender:self];
+}
+
 - (IBAction)refreshPressed:(UIBarButtonItem *)sender {
-    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"APIToken"];
+    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"ApiToken"];
     if (!token || token.length == 0)
         return;
     

@@ -85,17 +85,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Envelopes" id="tQt-TN-PWz">
-                        <barButtonItem key="leftBarButtonItem" title="⚙" id="8XF-GA-rPM">
-                            <connections>
-                                <segue destination="aV5-CL-56M" kind="modal" id="5gd-VA-Kk2"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="GIc-Tt-4Lf">
                             <connections>
                                 <action selector="refreshPressed:" destination="pGg-6v-bdr" id="s7r-0N-lqg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="aV5-CL-56M" kind="modal" identifier="Settings" id="T6e-Hv-kn0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
