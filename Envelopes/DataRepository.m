@@ -10,6 +10,43 @@
 
 @implementation DataRepository
 
++ (void)getTransactionsInEnvelope:(long)envelopeId usingToken:(NSString *)token callback:(DataCallback)callback
+{
+    NSURL *folderUrl = [self getDownloadsFolderUrl];
+    __block NSURL *fileUrl = [self getTransactionsFileUrl:folderUrl forEnvelope:envelopeId];
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path]]) {
+        NSLog(@"Reading transactions file from cache");
+        [self readTransactionsFile:fileUrl andCallback:callback];
+        return;
+    }
+
+    NSLog(@"%@", [NSString stringWithFormat:@"http://money.thewilsonpad.com/envelopes/%ld/transactions.json?api_token=%@", envelopeId, token]);
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://money.thewilsonpad.com/envelopes/%ld/transactions.json?api_token=%@", envelopeId, token]];
+
+    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLSessionDownloadTask *downloadTask = [urlSession downloadTaskWithURL:url
+                                                           completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                                                               if (error) {
+                                                                   NSLog(@"error downloading file: %@", error);
+                                                                   [self invokeCallback:callback data:nil errorMessage:@"Error downloading the transactions file"];
+                                                                   return;
+                                                               }
+
+                                                               // Move the recently downloaded file to the downloads folder and give it the new file name
+                                                               [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileUrl error:&error];
+                                                               if (error) {
+                                                                   NSLog(@"error moving file: %@", error);
+
+                                                                   // If we couldn't move the file, just read it at it's current location
+                                                                   fileUrl = location;
+                                                               }
+
+                                                               [self readTransactionsFile:fileUrl andCallback:callback];
+                                                           }];
+    [downloadTask resume];
+}
+
 + (void)getEnvelopesUsingToken:(NSString *)token allowCache:(BOOL)allowCache callback:(DataCallback)callback
 {
     // Get the downloads folder
@@ -29,7 +66,7 @@
                                                            completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
                                                                if (error) {
                                                                    NSLog(@"error downloading file: %@", error);
-                                                                   [self invokeCallback:callback data:nil errorMessage:@"Error downloading the file"];
+                                                                   [self invokeCallback:callback data:nil errorMessage:@"Error downloading the envelopes file"];
                                                                    return;
                                                                }
 
@@ -49,6 +86,18 @@
     [downloadTask resume];
 }
 
++ (NSURL *)getTransactionsFileUrl:(NSURL *)folderUrl forEnvelope:(long)envelopeId
+{
+    // Create a file name with the date in it eg. transactions-3-2014-02-14
+    NSString *dateString = [self getTodayDateString];
+    NSString *filename = [NSString stringWithFormat:@"transactions-%ld-%@", envelopeId, dateString];
+
+    NSLog(@"filename: %@", filename);
+
+    // The url will be "<App Sandbox>/<Documents Directory>/downloads/<filename>"
+    return [folderUrl URLByAppendingPathComponent:filename];
+}
+
 + (NSURL *)getEnvelopesFileUrl:(NSURL *)folderUrl
 {
     // Create a file name with the date in it eg. envelopes-2014-02-14
@@ -59,6 +108,26 @@
 
     // The url will be "<App Sandbox>/<Documents Directory>/downloads/<filename>"
     return [folderUrl URLByAppendingPathComponent:filename];
+}
+
++ (void)readTransactionsFile:(NSURL *)fileUrl andCallback:(DataCallback)callback
+{
+    // Read the data from the downloaded file
+    NSData *transactionsData = [NSData dataWithContentsOfURL:fileUrl];
+
+    NSError *error;
+    NSArray *json = [NSJSONSerialization JSONObjectWithData:transactionsData options:kNilOptions error:&error];
+    if (error) {
+        NSLog(@"error deserializing transactions json: %@", error);
+        [self invokeCallback:callback data:nil errorMessage:@"Error deserializing transactions json response"];
+        return;
+    }
+
+    NSArray *transactions = json;
+
+    NSLog(@"%@", transactions);
+
+    [self invokeCallback:callback data:transactions errorMessage:nil];
 }
 
 + (void)readEnvelopesFile:(NSURL *)fileUrl andCallback:(DataCallback)callback

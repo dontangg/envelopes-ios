@@ -7,10 +7,12 @@
 //
 
 #import "TransactionsViewController.h"
+#import "DataRepository.h"
 
 @interface TransactionsViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
+@property (nonatomic, strong) NSArray *transactions;
 @end
 
 @implementation TransactionsViewController
@@ -45,6 +47,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+
+    long envelopeId = [(NSNumber *)self.detailItem[@"id"] longValue];
+    NSString *token = [[NSUserDefaults standardUserDefaults] stringForKey:@"ApiToken"];
+    [DataRepository getTransactionsInEnvelope:envelopeId usingToken:token callback:^(NSArray *transactions, NSString *errorMessage) {
+        self.transactions = transactions;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +87,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.transactions ? self.transactions.count : 0;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,15 +107,33 @@
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"transaction" forIndexPath:indexPath];
 
-    cell.textLabel.text = @"Payee";
+    NSDictionary *transaction = self.transactions[indexPath.row];
 
-    float totalAmount = 10.4;
+    UILabel *label;
 
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    cell.detailTextLabel.text = [formatter stringFromNumber:[NSNumber numberWithFloat:totalAmount]];
+    // Populate the payee
+    label = (UILabel *)[cell viewWithTag:1];
+    label.text = transaction[@"payee"];
 
-    cell.detailTextLabel.textColor = totalAmount > 0 ? [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1] : [UIColor lightGrayColor];
+    // Format the "posted at" date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormatter dateFromString:transaction[@"posted_at"]];
+    [dateFormatter setDateFormat:@"E, MMMM d, y"];
+
+    // Populate the date
+    label = (UILabel *)[cell viewWithTag:2];
+    label.text = [dateFormatter stringFromDate:date];
+
+    // Format the amount
+    float totalAmount = [transaction[@"amount"] floatValue];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+
+    // Populate the amount
+    label = (UILabel *)[cell viewWithTag:3];
+    label.text = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:totalAmount]];
+    label.textColor = totalAmount > 0 ? [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1] : [UIColor lightGrayColor];
 
     return cell;
 }
